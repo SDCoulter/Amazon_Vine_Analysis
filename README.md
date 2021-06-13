@@ -72,6 +72,55 @@ Which makes the DataFrame:
 
 ![Unpaid Reviews DataFrame](images/02_unpaid.png)
 
+<!--
+How many Vine reviews and non-Vine reviews were there?
+How many Vine reviews were 5 stars? How many non-Vine reviews were 5 stars?
+What percentage of Vine reviews were 5 stars? What percentage of non-Vine reviews were 5 stars?
+Results:
+-->
+With this available data we are able to answer the following questions.
+
+**How many Vine reviews and non-Vine reviews were there?**
+
+```python
+# PAID - total number of reviews.
+print(f"Total number of paid reviews reviews is {len(paid_df)}.")
+
+Total number of paid reviews reviews is 33.
+```
+<!--
+```python
+# UNPAID - total number of reviews.
+print(f"Total number of unpaid reviews reviews is {len(unpaid_df)}.")
+
+Total number of unpaid reviews reviews is 45388.
+```
+
+
+
+**How many Vine reviews were 5 stars? How many non-Vine reviews were 5 stars?**
+
+# PAID - total number of 5-star reviews.
+print(f"Total number of paid 5-star reviews is {len(paid_df.loc[paid_df['star_rating'] == 5.0])}.")
+Total number of paid 5-star reviews is 15.
+
+# UNPAID - total number of 5-star reviews.
+print(f"Total number of unpaid 5-star reviews is {len(unpaid_df.loc[unpaid_df['star_rating'] == 5.0])}.")
+Total number of unpaid 5-star reviews is 23733.
+
+
+**What percentage of Vine reviews were 5 stars? What percentage of non-Vine reviews were 5 stars?**
+
+
+# PAID - percentage of 5-star reviews.
+print(f"The percentage of paid 5-star reviews is {(len(paid_df.loc[paid_df['star_rating'] == 5.0]) / len(paid_df)) * 100:.2f}%.")
+The percentage of paid 5-star reviews is 45.45%.
+
+# UNPAID - percentage of 5-star reviews.
+print(f"The percentage of unpaid 5-star reviews is {(len(unpaid_df.loc[unpaid_df['star_rating'] == 5.0]) / len(unpaid_df)) * 100:.2f}%.")
+The percentage of unpaid 5-star reviews is 52.29%.
+-->
+
 ## Challenge - Summary
 
 <!--
