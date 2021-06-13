@@ -126,8 +126,8 @@ We would split our filtered data in the same way as Deliverable 2, and creating 
 ```python
 # Get same paid and unpaid tables from Deliverable 2.
 filtered_df = df.loc[(df['total_votes'] >= 20) & (df['helpful_votes'] / df['total_votes'] >= 0.5)]
-paid_df['pos_neg'] = paid_df['star_rating'].apply(lambda x: 1 if x >= 4 else 0)
-unpaid_df['pos_neg'] = unpaid_df['star_rating'].apply(lambda x: 1 if x >= 4 else 0)
+paid_df = filtered_df.loc[df['vine'] == 'Y']
+unpaid_df = filtered_df.loc[df['vine'] == 'N']
 ```
 
 And import the t-test method from the SciPy module, passing in the `star_rating` column each new DataFrame:
