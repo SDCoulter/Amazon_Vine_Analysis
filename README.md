@@ -26,33 +26,33 @@ There is a bulleted list that addresses the three questions for unpaid and paid 
 
 In Google Colab ([Amazon Reviews ETL](Amazon_Reviews_ETL.ipynb)) we transformed the original dataset to create a new DataFrame that we called `vine_df`, which looked like:
 
-```py
+```python
 vine_df = df.select(['review_id', 'star_rating', 'helpful_votes', 'total_votes', 'vine', 'verified_purchase'])
 ```
 
 And using a connection to our Amazon Web Service PostgreSQL database, we wrote the DataFrame to a table with:
 
-```py
+```python
 vine_df.write.jdbc(url=jdbc_url, table='vine_table', mode=mode, properties=config)
 ```
 
 Once the data was in our database, we used the pgAdmin export function to export the table `vine_table` to a CSV file - this is in our repo, `vine_table.csv`. We then read in the CSV to a new notebook ([Vine Review Analysis](Vine_Review_Analysis.ipynb)), and use Pandas to perform more analysis on the dataset. We clean the data by first only keeping reviews with `total_votes >= 20`:
 
-```py
+```python
 # Retrieve all rows where: total_votes count >= 20.
 total_df = df.loc[df['total_votes'] >= 20]
 ```
 
 And then only reviews that have a `helpful` rating above `50%`:
 
-```py
+```python
 # Retrieve all rows where: helpful_votes / total_votes >= 50%.
 helpful_df = total_df.loc[df['helpful_votes'] / df['total_votes'] >= 0.5]
 ```
 
 Then we create a new DataFrame to hold all the paid (`vine == 'Y'`) reviews:
 
-```py
+```python
 # Retrieve all rows where: vine == 'Y'  - (paid).
 paid_df = helpful_df.loc[df['vine'] == 'Y']
 ```
@@ -63,7 +63,7 @@ Which makes the DataFrame:
 
 And also a DataFrame to hold all the unpaid (`vine == 'N'`) reviews:
 
-```py
+```python
 # Retrieve all rows where: vine == 'Y'  - (paid).
 unpaid_df = helpful_df.loc[df['vine'] == 'N']
 ```
