@@ -24,7 +24,7 @@ And using a connection to our Amazon Web Service PostgreSQL database, we wrote t
 vine_df.write.jdbc(url=jdbc_url, table='vine_table', mode=mode, properties=config)
 ```
 
-Once the data was in our database, we used the pgAdmin export function to export the table `vine_table` to a CSV file - this is in our repo, `vine_table.csv`. We then read in the CSV to a new notebook ([Vine Review Analysis](Vine_Review_Analysis.ipynb)), and use Pandas to perform more analysis on the dataset. We clean the data by first only keeping reviews with `total_votes >= 20`:
+Once the data was in our database, we used the pgAdmin export function to export the table `vine_table` to a CSV file - this is in our repo, `vine_table.csv`. We then read in the CSV to a new notebook ([Vine Review Analysis](Vine_Review_Analysis.ipynb)) and use Pandas to perform more analysis on the dataset. We clean the data by first only keeping reviews with `total_votes >= 20`:
 
 ```python
 # Retrieve all rows where: total_votes count >= 20.
@@ -49,7 +49,7 @@ Which makes the DataFrame:
 
 ![Paid Reviews DataFrame](images/01_paid.png)
 
-And also a DataFrame to hold all the unpaid (`vine == 'N'`) reviews:
+And also, a DataFrame to hold all the unpaid (`vine == 'N'`) reviews:
 
 ```python
 # Retrieve all rows where: vine == 'Y'  - (paid).
@@ -60,7 +60,7 @@ Which makes the DataFrame:
 
 ![Unpaid Reviews DataFrame](images/02_unpaid.png)
 
-With this available data we are able to answer the following questions.
+With this available data we can answer the following questions:
 
 **How many Vine reviews and non-Vine reviews were there?**
 
@@ -112,13 +112,38 @@ To give us the output:
 
 ## Challenge - Summary
 
-<!--
-Summary: In your summary, state if there is any positivity bias for reviews in the Vine program. Use the results of your analysis to support your statement. Then, provide one additional analysis that you could do with the dataset to support your statement.
-Summary:
+From the percentages returned from the last question in the results, we can see that paid reviews tend to give positive reviews 45% of the time, and unpaid reviews 52% of the time. This is only a 7% difference, from a very small sample size of paid reviews (especially compared to the number of unpaid reviews), so I would say there was **no bias for reviews in the Vine program**. Certainly **not positivity bias** at least, as the positivity rate is lower than that of the unpaid reviews. You would need more paid reviews in this category to compare with the unpaid ones to look for bias.
 
-The summary states whether or not there is bias, and the results support this statement (2 pt)
-An additional analysis is recommended to support the statement (2 pt)
--->
+To gain more insight into our data we could perform other statistical tests from previous modules, most notable Module 15. To continue to see if there is a positivity bias, we could run a two-sample t-test to compare the two datasets, and see if there exists a statistical difference between the two samples.
+
+To do this we would form our hypotheses and decide upon the standard significance level of `0.05`.
+
+* H<sub>0</sub> - there is **no statistical difference** between the two observed sample means.
+*	H<sub>a</sub> – there is **a statistical difference** between the two observed sample means.
+
+We would split our filtered data in the same way as Deliverable 2, and creating a paid and unpaid DataFrame:
+
+```python
+# Get same paid and unpaid tables from Deliverable 2.
+filtered_df = df.loc[(df['total_votes'] >= 20) & (df['helpful_votes'] / df['total_votes'] >= 0.5)]
+paid_df['pos_neg'] = paid_df['star_rating'].apply(lambda x: 1 if x >= 4 else 0)
+unpaid_df['pos_neg'] = unpaid_df['star_rating'].apply(lambda x: 1 if x >= 4 else 0)
+```
+
+And import the t-test method from the SciPy module, passing in the `star_rating` column each new DataFrame:
+
+```python
+from scipy.stats import ttest_ind
+ttest_ind(paid_df['star_rating'], unpaid_df['star_rating'])
+```
+
+Which outputs:
+
+```
+Ttest_indResult(statistic=0.8728524952522342, pvalue=0.3827480965398675)
+```
+
+Showing a **p-value of 0.382** - meaning we are unable to reject the null hypothesis and must state there is no significant difference between the sample means. This is more proof that supports our statement of there being ***no positivity bias in the paid reviews***.
 
 ## Context
 
