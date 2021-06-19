@@ -62,7 +62,7 @@ Which makes the DataFrame:
 
 With this available data we can answer the following questions:
 
-**How many Vine reviews and non-Vine reviews were there?**
+* **How many Vine reviews and non-Vine reviews were there?**
 
 We can find this with:
 
@@ -78,7 +78,7 @@ Which gives us the output:
 * Total number of paid reviews is **33**.
 * Total number of unpaid reviews is **45388**.
 
-**How many Vine reviews were 5 stars? How many non-Vine reviews were 5 stars?**
+* **How many Vine reviews were 5 stars? How many non-Vine reviews were 5 stars?**
 
 To answer this question:
 
@@ -94,7 +94,7 @@ Giving the output:
 * Total number of paid 5-star reviews is **15**.
 * Total number of unpaid 5-star reviews is **23733**.
 
-**What percentage of Vine reviews were 5 stars? What percentage of non-Vine reviews were 5 stars?**
+* **What percentage of Vine reviews were 5 stars? What percentage of non-Vine reviews were 5 stars?**
 
 And finally, we answer this question with:
 
