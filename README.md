@@ -130,7 +130,7 @@ paid_df = filtered_df.loc[df['vine'] == 'Y']
 unpaid_df = filtered_df.loc[df['vine'] == 'N']
 ```
 
-And import the t-test method from the SciPy module, passing in the `star_rating` column each new DataFrame:
+And import the t-test method from the SciPy module, passing in the `star_rating` column from each new DataFrame:
 
 ```python
 from scipy.stats import ttest_ind
